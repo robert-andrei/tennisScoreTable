@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     View[] buttonLayout = new View[2];
     View[] playerPresentation = new View[2];
     ImageView[] server = new ImageView[2];
-    ImageView[] challenges = new ImageView[6];
+    ImageView[] challenges = new ImageView[8];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +56,12 @@ public class MainActivity extends AppCompatActivity {
         challenges[0] = (ImageView) playerPresentation[0].findViewById(R.id.challengeOneView);
         challenges[1] = (ImageView) playerPresentation[0].findViewById(R.id.challengeTwoView);
         challenges[2] = (ImageView) playerPresentation[0].findViewById(R.id.challengeThreeView);
-        challenges[3] = (ImageView) playerPresentation[1].findViewById(R.id.challengeOneView);
-        challenges[4] = (ImageView) playerPresentation[1].findViewById(R.id.challengeTwoView);
-        challenges[5] = (ImageView) playerPresentation[1].findViewById(R.id.challengeThreeView);
+        challenges[3] = (ImageView) playerPresentation[0].findViewById(R.id.tiebreakBonusChallengeView);
+
+        challenges[4] = (ImageView) playerPresentation[1].findViewById(R.id.challengeOneView);
+        challenges[5] = (ImageView) playerPresentation[1].findViewById(R.id.challengeTwoView);
+        challenges[6] = (ImageView) playerPresentation[1].findViewById(R.id.challengeThreeView);
+        challenges[7] = (ImageView) playerPresentation[1].findViewById(R.id.tiebreakBonusChallengeView);
 
         score[0] = new Score();
         score[1] = new Score();
@@ -179,6 +182,8 @@ public class MainActivity extends AppCompatActivity {
                 // Opponent 6 games
                 displaySets(player, score[player].getSets() + score[opponent].getSets(), score[player].getGames() + 1);
                 tiebreak = true;
+                giveBonusChallenge(player);
+                giveBonusChallenge(opponent);
             }
         } else if (score[player].getGames() == 6) {
             // Player 6 games, Opponent 5 games
@@ -211,9 +216,13 @@ public class MainActivity extends AppCompatActivity {
         score[player].setGames(0);
         score[opponent].setGames(0);
         score[player].setSets(score[player].getSets() + 1);
+
         if (totalSets < 4) {
             setsScore[totalSets + 1].setVisibility(View.VISIBLE);
             setsScore[totalSets + 6].setVisibility(View.VISIBLE);
+
+            resetChallenges(player);
+            resetChallenges(opponent);
         }
     }
 
@@ -283,9 +292,26 @@ public class MainActivity extends AppCompatActivity {
             computeScore(player);
         } else {
             computeScore(opponent);
-            challenges[player * 3 + --challengesLeft[player]].setImageResource(0);
+            challenges[player * 4 + --challengesLeft[player]].setVisibility(View.INVISIBLE);
         }
 
+    }
+
+    private void resetChallenges(int player) {
+
+        for (int i = challengesLeft[player] + player * 4; i < 3 + player * 4; i++) {
+            challenges[i].setVisibility(View.VISIBLE);
+        }
+
+        if (challengesLeft[player] == 4) {
+            challenges[player * 4 + 3].setVisibility(View.INVISIBLE);
+        }
+
+        challengesLeft[player] = 3;
+    }
+
+    private void giveBonusChallenge(int player) {
+        challenges[player * 4 + challengesLeft[player]++].setVisibility(View.VISIBLE);
     }
 
     public class Score {
