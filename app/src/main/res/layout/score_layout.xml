@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1">
+
+    <ImageView
+        android:id="@+id/playerFlagImage"
+        style="@style/playerFlag"/>
+
+    <TextView
+        android:id="@+id/playerNameScoreView"
+        style="@style/playerNameScore"/>
+
+    <ImageView
+        android:id="@+id/servingImage"
+        style="@style/servingImage"/>
+
+    <TextView
+        android:id="@+id/set1Score"
+        style="@style/playerScore"/>
+
+    <TextView
+        android:id="@+id/set2Score"
+        android:visibility="gone"
+        style="@style/playerScore"/>
+
+    <TextView
+        android:id="@+id/set3Score"
+        android:visibility="gone"
+        style="@style/playerScore"/>
+
+    <TextView
+        android:id="@+id/set4Score"
+        android:visibility="gone"
+        style="@style/playerScore"/>
+
+    <TextView
+        android:id="@+id/set5Score"
+        android:visibility="gone"
+        style="@style/playerScore"/>
+
+    <TextView
+        android:id="@+id/gameScore"
+        style="@style/playerScore"
+        android:background="@drawable/points_border"
+        android:textColor="@color/colorPointsScoreText"
+        android:layout_weight="2"/>
+
+</LinearLayout>

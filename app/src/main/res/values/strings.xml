@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Tennis Score Table</string>
+    <string name="playerOneName">Roger Federer</string>
+    <string name="playerTwoName">Rafael Nadal</string>
+    <string name="playerOneScoreName">Federer</string>
+    <string name="playerTwoScoreName">Nadal</string>
+    <string name="initialScore">0</string>
+    <string name="nothing"></string>
+    <string name="onePoint">15</string>
+    <string name="twoPoints">30</string>
+    <string name="threePoints">40</string>
+    <string name="fourPoints">AD</string>
+</resources>
