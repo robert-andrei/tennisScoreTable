@@ -6,8 +6,8 @@
     <color name="colorButtonNormal">#3F51B5</color>
     <color name="colorScoreBackground">#B3000000</color> <!--A63F0949-->
     <color name="colorPointsBackground">#FFFFFF</color>
-    <color name="colorScoreBorder">#000000</color> <!--FA8F31-->
-    <color name="colorPointsBorder">#BFFFFFFF</color>
+    <color name="colorScoreBorder">#2DFFFFFF</color> <!--FA8F31-->
+    <color name="colorPointsBorder">#2DFFFFFF</color>
     <color name="colorNameBackground">#80FFFFFF</color>
     <color name="colorGamesScoreText">#FFFFFF</color>
     <color name="colorPointsScoreText">#000000</color>
