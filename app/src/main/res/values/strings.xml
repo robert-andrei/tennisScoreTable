@@ -12,4 +12,5 @@
     <string name="fourPoints">AD</string>
     <string name="pointButton">Point</string>
     <string name="challengeButton">Challenge</string>
+    <string name="correctionButton">Correction</string>
 </resources>
