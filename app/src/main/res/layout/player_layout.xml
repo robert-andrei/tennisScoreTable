@@ -3,7 +3,9 @@
     android:orientation="vertical"
     android:layout_width="0dp"
     android:layout_weight="1"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="ContentDescription">
 
     <ImageView
         style="@style/playerPhoto"
