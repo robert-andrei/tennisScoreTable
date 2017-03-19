@@ -10,4 +10,6 @@
     <string name="twoPoints">30</string>
     <string name="threePoints">40</string>
     <string name="fourPoints">AD</string>
+    <string name="pointButton">Point</string>
+    <string name="challengeButton">Challenge</string>
 </resources>
