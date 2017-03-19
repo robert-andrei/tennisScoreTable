@@ -1,6 +1,5 @@
 package com.example.android.tennisscoretable;
 
-import android.annotation.TargetApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -208,13 +207,12 @@ public class MainActivity extends AppCompatActivity {
         server[1 - serving].setImageResource(0);
     }
 
-    @TargetApi(23)
     public void nextSet(int player, int opponent) {
 
         int totalSets = score[player].getSets() + score[opponent].getSets();
 
         displaySets(player, totalSets, score[player].getGames() + 1);
-        setsScore[totalSets + 5 * player].setTextColor(getResources().getColor(R.color.colorSetWon, null));
+        setsScore[totalSets + 5 * player].setTextColor(getResources().getColor(R.color.colorSetWon));
         score[player].setGames(0);
         score[opponent].setGames(0);
         score[player].setSets(score[player].getSets() + 1);
