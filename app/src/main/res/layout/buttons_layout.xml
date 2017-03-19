@@ -8,13 +8,13 @@
     <Button
         android:id="@+id/playerPoint"
         style="@style/button"
-        android:text="Point"
+        android:text="@string/pointButton"
         android:onClick="increaseScore"/>
 
     <Button
         android:id="@+id/playerChallenge"
         style="@style/button"
-        android:text="Challenge"
+        android:text="@string/challengeButton"
         android:onClick="challenge"/>
 
 </LinearLayout>
