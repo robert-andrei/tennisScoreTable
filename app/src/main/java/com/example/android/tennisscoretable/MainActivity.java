@@ -13,8 +13,14 @@ public class MainActivity extends AppCompatActivity {
     boolean finished = false;
     int serving = 0;
     boolean tiebreak = false;
+    boolean correctionDone = true;
+    boolean challenged = false;
+    boolean challengeWasGood = false;
+    boolean endedWithTiebreak = false;
+    int challenger = -1;
     int[] challengesLeft = new int[2];
     Score[] score = new Score[2];
+    Score[] oldScore = new Score[2];
     View[] scoreViews = new View[2];
     TextView[] setsScore = new TextView[10];
     TextView[] pointsScore = new TextView[2];
@@ -101,6 +107,10 @@ public class MainActivity extends AppCompatActivity {
     public void increaseScore(View view) {
 
         if (!finished) {
+
+            correctionDone = false;
+            challenged = false;
+
             int parentId = ((View) view.getParent()).getId();
 
             if (parentId == R.id.playerOneButtons) {
@@ -114,6 +124,9 @@ public class MainActivity extends AppCompatActivity {
     private void computeScore(int player) {
 
         int opponent = 1 - player;
+
+        oldScore[player] = score[player].createCopy();
+        oldScore[opponent] = score[opponent].createCopy();
 
         if (tiebreak) {
             if (score[player].getPoints() < 6) {
@@ -130,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
                         finished = true;
                     }
                     tiebreak = false;
+                    endedWithTiebreak = true;
                 } else if (score[opponent].getPoints() >= score[player].getPoints()) {
                     // Opponent equal or more points than Player
                     displayPoints(player, score[player].getPoints() + 1);
@@ -170,11 +184,8 @@ public class MainActivity extends AppCompatActivity {
             // Player 5 games
             if (score[opponent].getGames() < 5) {
                 // Opponent 0, 1, 2, 3 or 4 games
+                endedWithTiebreak = false;
                 nextSet(player, opponent);
-                if (score[player].getSets() == 3) {
-                    // Player 3 sets
-                    finished = true;
-                }
             } else if (score[opponent].getGames() == 5) {
                 // Opponent 5 games
                 displaySets(player, score[player].getSets() + score[opponent].getSets(), score[player].getGames() + 1);
@@ -188,23 +199,17 @@ public class MainActivity extends AppCompatActivity {
         } else if (score[player].getGames() == 6) {
             // Player 6 games, Opponent 5 games
             nextSet(player, opponent);
-            if (score[player].getSets() == 3) {
-                // Player 3 sets
-                finished = true;
-            }
         }
     }
 
     public void resetPoints(int player, int opponent) {
 
         score[player].setPoints(0);
-        displayPoints(player, score[player].getPoints());
         score[opponent].setPoints(0);
+        displayPoints(player, score[player].getPoints());
         displayPoints(opponent, score[opponent].getPoints());
 
-        serving = 1 - serving;
-        server[serving].setImageResource(R.drawable.left_arrow);
-        server[1 - serving].setImageResource(0);
+        changeServe();
     }
 
     public void nextSet(int player, int opponent) {
@@ -217,7 +222,12 @@ public class MainActivity extends AppCompatActivity {
         score[opponent].setGames(0);
         score[player].setSets(score[player].getSets() + 1);
 
-        if (totalSets < 4) {
+        if (score[player].getSets() == 3) {
+            // Player 3 sets
+            finished = true;
+        }
+
+        if (totalSets < 4 && !finished) {
             setsScore[totalSets + 1].setVisibility(View.VISIBLE);
             setsScore[totalSets + 6].setVisibility(View.VISIBLE);
 
@@ -236,9 +246,7 @@ public class MainActivity extends AppCompatActivity {
             pointsScore[player].setText(String.valueOf(points));
 
             if (totalPoints % 2 == 1) {
-                serving = 1 - serving;
-                server[serving].setImageResource(R.drawable.left_arrow);
-                server[1 - serving].setImageResource(0);
+                changeServe();
             }
         } else {
             if (points == 0) {
@@ -268,6 +276,10 @@ public class MainActivity extends AppCompatActivity {
     public void challenge(View view) {
 
         if (!finished) {
+
+            correctionDone = false;
+            challenged = true;
+
             int parentId = ((View) view.getParent()).getId();
 
             if (parentId == R.id.playerOneButtons && challengesLeft[0] > 0) {
@@ -282,6 +294,9 @@ public class MainActivity extends AppCompatActivity {
 
         int opponent = 1 - player;
 
+        challengeWasGood = false;
+        challenger = player;
+
         Random r = new Random();
         int max = 15, min = 0;
         int randomNumberA = r.nextInt(max - min + 1) + min;
@@ -290,6 +305,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (randomNumberA <= 10 && randomNumberB <= 35) {
             computeScore(player);
+            challengeWasGood = true;
         } else {
             computeScore(opponent);
             challenges[player * 4 + --challengesLeft[player]].setVisibility(View.INVISIBLE);
@@ -312,6 +328,72 @@ public class MainActivity extends AppCompatActivity {
 
     private void giveBonusChallenge(int player) {
         challenges[player * 4 + challengesLeft[player]++].setVisibility(View.VISIBLE);
+    }
+
+    private void changeServe() {
+        serving = 1 - serving;
+        server[serving].setImageResource(R.drawable.left_arrow);
+        server[1 - serving].setImageResource(0);
+    }
+
+    public void correction(View view) {
+
+        if (!correctionDone) {
+
+            // New game
+            if (score[0].getPoints() == 0 && score[1].getPoints() == 0) {
+
+                changeServe();
+
+                // New Set
+                if (score[0].getGames() == 0 && score[1].getGames() == 0) {
+
+                    if (endedWithTiebreak) {
+                        tiebreak = true;
+                    }
+
+                    int totalSets = score[0].getSets() + score[1].getSets();
+
+                    if (totalSets < 5) {
+                        setsScore[totalSets].setVisibility(View.GONE);
+                        setsScore[totalSets + 5].setVisibility(View.GONE);
+                    }
+
+                    setsScore[totalSets - 1].setTextColor(getResources().getColor(R.color.colorGamesScoreText));
+                    setsScore[totalSets + 4].setTextColor(getResources().getColor(R.color.colorGamesScoreText));
+                } else if (score[0].getGames() == 6 && score[1].getGames() == 6) {
+
+                    tiebreak = false;
+
+                    challenges[--challengesLeft[0]].setVisibility(View.INVISIBLE);
+                    challenges[4 + --challengesLeft[1]].setVisibility(View.INVISIBLE);
+                }
+            }
+
+            if (challenged && !challengeWasGood) {
+                challenges[challenger * 4 + challengesLeft[challenger]++].setVisibility(View.VISIBLE);
+            } else if (tiebreak) {
+                if ((score[0].getPoints() + score[1].getPoints()) % 2 == 1) {
+                    changeServe();
+                }
+            }
+
+            challenged = false;
+
+            score[0] = oldScore[0].createCopy();
+            score[1] = oldScore[1].createCopy();
+
+            int totalSets = score[0].getSets() + score[1].getSets();
+
+            displaySets(0, totalSets, score[0].getGames());
+            displaySets(1, totalSets, score[1].getGames());
+
+            displayPoints(0, score[0].getPoints());
+            displayPoints(1, score[1].getPoints());
+
+            correctionDone = true;
+            finished = false;
+        }
     }
 
     public class Score {
@@ -345,6 +427,17 @@ public class MainActivity extends AppCompatActivity {
 
         int getPoints() {
             return points;
+        }
+
+        Score createCopy() {
+
+            Score newScore = new Score();
+
+            newScore.setSets(this.getSets());
+            newScore.setGames(this.getGames());
+            newScore.setPoints(this.getPoints());
+
+            return newScore;
         }
 
     }
