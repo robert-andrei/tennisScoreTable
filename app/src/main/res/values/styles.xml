@@ -24,15 +24,15 @@
         <item name="android:textSize">@dimen/playerNameText</item>
         <item name="android:textColor">@color/colorPlayerPresentation</item>
         <item name="android:background">@drawable/name_border</item>
-        <item name="android:layout_marginStart">4dp</item>
-        <item name="android:layout_marginEnd">4dp</item>
+        <item name="android:layout_marginStart">@dimen/playerNameMargin</item>
+        <item name="android:layout_marginEnd">@dimen/playerNameMargin</item>
     </style>
 
     <style name="servingImage">
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:padding">4dp</item>
+        <item name="android:padding">@dimen/elementsPadding</item>
         <item name="android:background">@drawable/border</item>
         <!--<item name="android:scaleType">centerCrop</item>
         <item name="android:adjustViewBounds">true</item>-->
@@ -43,7 +43,7 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">2</item>
         <item name="android:background">@drawable/border</item>
-        <item name="android:padding">4dp</item>
+        <item name="android:padding">@dimen/elementsPadding</item>
         <!--<item name="android:scaleType">centerCrop</item>
         <item name="android:adjustViewBounds">true</item>-->
     </style>
@@ -69,18 +69,18 @@
         <item name="android:textColor">@color/colorGamesScoreText</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:paddingStart">8dp</item>
-        <item name="android:paddingEnd">8dp</item>
+        <item name="android:paddingStart">@dimen/playerNameScoreMargin</item>
+        <item name="android:paddingEnd">@dimen/playerNameScoreMargin</item>
         <item name="android:background">@drawable/border</item>
     </style>
 
     <style name="button">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_marginStart">8dp</item>
-        <item name="android:layout_marginEnd">8dp</item>
-        <item name="android:layout_marginTop">4dp</item>
-        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:layout_marginStart">@dimen/buttonHorizontalMargin</item>
+        <item name="android:layout_marginEnd">@dimen/buttonHorizontalMargin</item>
+        <item name="android:layout_marginTop">@dimen/buttonVerticalMargin</item>
+        <item name="android:layout_marginBottom">@dimen/buttonVerticalMargin</item>
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:textSize">@dimen/buttonText</item>
         <item name="android:textColor">@color/colorPlayerPresentation</item>
@@ -90,8 +90,8 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:paddingTop">4dp</item>
-        <item name="android:paddingBottom">4dp</item>
+        <item name="android:paddingTop">@dimen/elementsPadding</item>
+        <item name="android:paddingBottom">@dimen/elementsPadding</item>
         <item name="android:src">@drawable/tennis_ball</item>
     </style>
 

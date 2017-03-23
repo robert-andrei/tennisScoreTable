@@ -5,4 +5,10 @@
     <dimen name="playerNameText">24sp</dimen>
     <dimen name="scoreText">16sp</dimen>
     <dimen name="buttonText">16sp</dimen>
+    <dimen name="playerNameMargin">4dp</dimen>
+    <dimen name="playerNameScoreMargin">8dp</dimen>
+    <dimen name="elementsPadding">4dp</dimen>
+    <dimen name="buttonVerticalMargin">4dp</dimen>
+    <dimen name="buttonHorizontalMargin">8dp</dimen>
+    <dimen name="correctionButtonHorizontalMargin">32dp</dimen>
 </resources>
