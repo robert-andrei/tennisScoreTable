@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     View[] scoreViews = new View[2];
     TextView[] setsScore = new TextView[10];
     TextView[] pointsScore = new TextView[2];
+    View[] emptySetsReplacer = new View[8];
     View[] buttonLayout = new View[2];
     View[] playerPresentation = new View[2];
     ImageView[] server = new ImageView[2];
@@ -52,6 +53,16 @@ public class MainActivity extends AppCompatActivity {
 
         pointsScore[0] = (TextView) scoreViews[0].findViewById(R.id.gameScore);
         pointsScore[1] = (TextView) scoreViews[1].findViewById(R.id.gameScore);
+
+        emptySetsReplacer[0] = scoreViews[0].findViewById(R.id.set2EmptyReplacer);
+        emptySetsReplacer[1] = scoreViews[0].findViewById(R.id.set3EmptyReplacer);
+        emptySetsReplacer[2] = scoreViews[0].findViewById(R.id.set4EmptyReplacer);
+        emptySetsReplacer[3] = scoreViews[0].findViewById(R.id.set5EmptyReplacer);
+
+        emptySetsReplacer[4] = scoreViews[1].findViewById(R.id.set2EmptyReplacer);
+        emptySetsReplacer[5] = scoreViews[1].findViewById(R.id.set3EmptyReplacer);
+        emptySetsReplacer[6] = scoreViews[1].findViewById(R.id.set4EmptyReplacer);
+        emptySetsReplacer[7] = scoreViews[1].findViewById(R.id.set5EmptyReplacer);
 
         buttonLayout[0] = findViewById(R.id.playerOneButtons);
         buttonLayout[1] = findViewById(R.id.playerTwoButtons);
@@ -231,6 +242,9 @@ public class MainActivity extends AppCompatActivity {
             setsScore[totalSets + 1].setVisibility(View.VISIBLE);
             setsScore[totalSets + 6].setVisibility(View.VISIBLE);
 
+            emptySetsReplacer[totalSets].setVisibility(View.GONE);
+            emptySetsReplacer[totalSets + 4].setVisibility(View.GONE);
+
             resetChallenges(player);
             resetChallenges(opponent);
         }
@@ -357,6 +371,8 @@ public class MainActivity extends AppCompatActivity {
                     if (totalSets < 5) {
                         setsScore[totalSets].setVisibility(View.GONE);
                         setsScore[totalSets + 5].setVisibility(View.GONE);
+                        emptySetsReplacer[totalSets - 1].setVisibility(View.VISIBLE);
+                        emptySetsReplacer[totalSets + 3].setVisibility(View.VISIBLE);
                     }
 
                     setsScore[totalSets - 1].setTextColor(getResources().getColor(R.color.colorGamesScoreText));

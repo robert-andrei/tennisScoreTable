@@ -50,4 +50,24 @@
         android:textColor="@color/colorPointsScoreText"
         android:layout_weight="2"/>
 
+    <View
+        android:id="@+id/set2EmptyReplacer"
+        android:visibility="visible"
+        style="@style/playerScoreEmptyReplacer"/>
+
+    <View
+        android:id="@+id/set3EmptyReplacer"
+        android:visibility="visible"
+        style="@style/playerScoreEmptyReplacer"/>
+
+    <View
+        android:id="@+id/set4EmptyReplacer"
+        android:visibility="visible"
+        style="@style/playerScoreEmptyReplacer"/>
+
+    <View
+        android:id="@+id/set5EmptyReplacer"
+        android:visibility="visible"
+        style="@style/playerScoreEmptyReplacer"/>
+
 </LinearLayout>
