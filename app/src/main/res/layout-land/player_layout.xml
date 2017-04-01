@@ -9,15 +9,15 @@
 
     <ImageView
         style="@style/playerPhoto"
-        android:id="@+id/playerImageView"/>
+        android:id="@+id/playerImageView"
+        android:scaleType="fitEnd"/>
 
     <Spinner
         android:id="@+id/playerNameSpinner"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
-        android:hint="@string/spinnerHint"
-        android:background="@drawable/name_border"
+        android:background="@color/colorNameBackground"
         android:textAlignment="center"/>
 
     <include layout="@layout/challenge_layout"/>

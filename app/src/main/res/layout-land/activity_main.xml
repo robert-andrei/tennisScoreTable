@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.android.tennisscoretable.MainActivity"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="ContentDescription">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/us_open_court"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/landOverallMargin"
+        android:orientation="horizontal">
+
+        <include layout="@layout/player_layout"
+            android:id="@+id/playerOnePresentationLayout"/>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/landScoreHeight"
+                android:paddingBottom="@dimen/landScorePadding"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
+
+                <include layout="@layout/score_layout"
+                    android:id="@+id/player1Score"/>
+
+                <include layout="@layout/score_layout"
+                    android:id="@+id/player2Score"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/correctionButton"
+                android:orientation="horizontal">
+
+                <include layout="@layout/buttons_layout"
+                    android:id="@+id/playerOneButtons"/>
+
+                <include layout="@layout/buttons_layout"
+                    android:id="@+id/playerTwoButtons"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/correctionButton"
+                style="@style/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/correctionButtonHorizontalMargin"
+                android:layout_marginEnd="@dimen/correctionButtonHorizontalMargin"
+                android:layout_alignParentBottom="true"
+                android:text="@string/correctionButton"
+                android:onClick="correction"/>
+
+        </RelativeLayout>
+
+        <include layout="@layout/player_layout"
+            android:id="@+id/playerTwoPresentationLayout"/>
+
+    </LinearLayout>
+
+</FrameLayout>

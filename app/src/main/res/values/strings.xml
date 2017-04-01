@@ -1,9 +1,25 @@
 <resources>
     <string name="app_name">Tennis Score Table</string>
+    <!--[CHAR LIMIT = 20]-->
     <string name="playerOneName">Roger Federer</string>
+    <!--[CHAR LIMIT = 20]-->
     <string name="playerTwoName">Rafael Nadal</string>
+    <!--[CHAR LIMIT = 20]-->
+    <string name="playerThreeName">Novak Djokovic</string>
+    <!--[CHAR LIMIT = 20]-->
+    <string name="playerFourName">Stanislas Wawrinka</string>
+    <!--[CHAR LIMIT = 20]-->
+    <string name="playerFiveName">Miloš Raonić</string>
+    <!--[CHAR LIMIT = 8]-->
     <string name="playerOneScoreName">Federer</string>
+    <!--[CHAR LIMIT = 8]-->
     <string name="playerTwoScoreName">Nadal</string>
+    <!--[CHAR LIMIT = 8]-->
+    <string name="playerThreeScoreName">Djokovic</string>
+    <!--[CHAR LIMIT = 8]-->
+    <string name="playerFourScoreName">Wawrinka</string>
+    <!--[CHAR LIMIT = 8]-->
+    <string name="playerFiveScoreName">Raonić</string>
     <string name="initialScore">0</string>
     <string name="nothing"></string>
     <string name="onePoint">15</string>
@@ -13,4 +29,14 @@
     <string name="pointButton">Point</string>
     <string name="challengeButton">Challenge</string>
     <string name="correctionButton">Correction</string>
+    <string name="spinnerHint">Choose player</string>
+
+    <string-array name="player_choices">
+        <item>Choose Player</item>
+        <item>Roger Federer</item>
+        <item>Rafael Nadal</item>
+        <item>Novak Djokovic</item>
+        <item>Stanislas Wawrinka</item>
+        <item>Miloš Raonić</item>
+    </string-array>
 </resources>

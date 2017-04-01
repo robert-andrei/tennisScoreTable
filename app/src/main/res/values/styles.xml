@@ -13,6 +13,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_weight">14</item>
         <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:scaleType">fitEnd</item>
     </style>
 
     <style name="playerName">
@@ -70,12 +71,13 @@
     <style name="playerNameScore">
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_weight">4</item>
+        <item name="android:layout_weight">5</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:textSize">@dimen/scoreText</item>
         <item name="android:textColor">@color/colorGamesScoreText</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:lines">1</item>
         <item name="android:paddingStart">@dimen/playerNameScoreMargin</item>
         <item name="android:paddingEnd">@dimen/playerNameScoreMargin</item>
         <item name="android:background">@drawable/border</item>
