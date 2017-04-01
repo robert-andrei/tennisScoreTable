@@ -3,8 +3,12 @@ package com.example.android.tennisscoretable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Random;
 
@@ -22,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     Score[] score = new Score[2];
     Score[] oldScore = new Score[2];
     View[] scoreViews = new View[2];
+    TextView[] scorePlayerNames = new TextView[2];
     TextView[] setsScore = new TextView[10];
     TextView[] pointsScore = new TextView[2];
     View[] emptySetsReplacer = new View[8];
@@ -29,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
     View[] playerPresentation = new View[2];
     ImageView[] server = new ImageView[2];
     ImageView[] challenges = new ImageView[8];
+    ImageView[] playerImages = new ImageView[2];
+    //TextView[] playerNames = new TextView[2];
+    Spinner[] playerNames = new Spinner[2];
+    ImageView[] flags = new ImageView[2];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,48 +96,198 @@ public class MainActivity extends AppCompatActivity {
         challengesLeft[1] = 3;
 
         // Set first player presentation layout
-        ImageView playerImage = (ImageView) playerPresentation[0].findViewById(R.id.playerImageView);
-        playerImage.setImageResource(R.drawable.federer_full_15);
-        TextView playerName = (TextView) playerPresentation[0].findViewById(R.id.playerTextView);
-        playerName.setText(R.string.playerOneName);
+        playerImages[0] = (ImageView) playerPresentation[0].findViewById(R.id.playerImageView);
+        playerImages[0].setImageResource(R.drawable.unknown_player);
+        //TextView playerName = (TextView) playerPresentation[0].findViewById(R.id.playerTextView);
+        //playerName.setText(R.string.playerOneName);
 
         // Set second player presentation layout
-        playerImage = (ImageView) playerPresentation[1].findViewById(R.id.playerImageView);
-        playerImage.setImageResource(R.drawable.nadal_full_15);
-        playerName = (TextView) playerPresentation[1].findViewById(R.id.playerTextView);
-        playerName.setText(R.string.playerTwoName);
+        playerImages[1] = (ImageView) playerPresentation[1].findViewById(R.id.playerImageView);
+        playerImages[1].setImageResource(R.drawable.unknown_player);
+        //playerName = (TextView) playerPresentation[1].findViewById(R.id.playerTextView);
+        //playerName.setText(R.string.playerTwoName);
 
         // Set first player score table
-        ImageView flag = (ImageView) scoreViews[0].findViewById(R.id.playerFlagImage);
-        flag.setImageResource(R.drawable.swiss_flag);
-        playerName = (TextView) scoreViews[0].findViewById(R.id.playerNameScoreView);
-        playerName.setText(R.string.playerOneScoreName);
+        flags[0] = (ImageView) scoreViews[0].findViewById(R.id.playerFlagImage);
+        flags[0].setImageResource(R.drawable.unknown_flag);
+        scorePlayerNames[0] = (TextView) scoreViews[0].findViewById(R.id.playerNameScoreView);
+        scorePlayerNames[0].setText(R.string.nothing);
         server[0] = (ImageView) scoreViews[0].findViewById(R.id.servingImage);
         server[0].setImageResource(R.drawable.left_arrow);
 
         // Set second player score table
         scoreViews[1] = findViewById(R.id.player2Score);
-        flag = (ImageView) scoreViews[1].findViewById(R.id.playerFlagImage);
-        flag.setImageResource(R.drawable.spain_flag);
-        playerName = (TextView) scoreViews[1].findViewById(R.id.playerNameScoreView);
-        playerName.setText(R.string.playerTwoScoreName);
+        flags[1] = (ImageView) scoreViews[1].findViewById(R.id.playerFlagImage);
+        flags[1].setImageResource(R.drawable.unknown_flag);
+        scorePlayerNames[1] = (TextView) scoreViews[1].findViewById(R.id.playerNameScoreView);
+        scorePlayerNames[1].setText(R.string.nothing);
         server[1] = (ImageView) scoreViews[1].findViewById(R.id.servingImage);
+
+        playerNames[0] = (Spinner) playerPresentation[0].findViewById(R.id.playerNameSpinner);
+        playerNames[1] = (Spinner) playerPresentation[1].findViewById(R.id.playerNameSpinner);
+        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.player_choices, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        playerNames[0].setAdapter(adapter);
+        playerNames[1].setAdapter(adapter);
+
+        playerNames[0].setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+
+                if (playerNames[0].getSelectedItem().toString().equals
+                        (playerNames[1].getSelectedItem().toString()) &&
+                        !playerNames[0].getSelectedItem().equals(adapter.getItem(0))) {
+
+                    playerNames[0].setSelection(0);
+                    playerImages[0].setImageResource(R.drawable.unknown_player);
+                    scorePlayerNames[0].setText("");
+                    flags[0].setImageResource(R.drawable.unknown_flag);
+
+                    Toast selectionError = Toast.makeText(MainActivity.super.getApplicationContext(),
+                            "Player already chosen", Toast.LENGTH_SHORT);
+                    selectionError.show();
+
+                } else {
+
+                    String selectedPlayer = playerNames[0].getSelectedItem().toString();
+
+                    switch (selectedPlayer) {
+                        case "Choose Player":
+                            playerImages[0].setImageResource(R.drawable.unknown_player);
+                            scorePlayerNames[0].setText("");
+                            flags[0].setImageResource(R.drawable.unknown_flag);
+                            break;
+
+                        case "Roger Federer":
+                            playerImages[0].setImageResource(R.drawable.federer_full_15);
+                            scorePlayerNames[0].setText("Federer");
+                            flags[0].setImageResource(R.drawable.swiss_flag);
+                            break;
+
+                        case "Rafael Nadal":
+                            playerImages[0].setImageResource(R.drawable.nadal_full_15);
+                            scorePlayerNames[0].setText("Nadal");
+                            flags[0].setImageResource(R.drawable.spain_flag);
+                            break;
+
+                        case "Novak Djokovic":
+                            playerImages[0].setImageResource(R.drawable.djokovic_full_16);
+                            scorePlayerNames[0].setText("Djokovic");
+                            flags[0].setImageResource(R.drawable.flag_of_serbia);
+                            break;
+
+                        case "Stanislas Wawrinka":
+                            playerImages[0].setImageResource(R.drawable.wawrinka_full_15);
+                            scorePlayerNames[0].setText("Wawrinka");
+                            flags[0].setImageResource(R.drawable.swiss_flag);
+                            break;
+
+                        case "Miloš Raonić":
+                            playerImages[0].setImageResource(R.drawable.raonic_full_16);
+                            scorePlayerNames[0].setText("Raonić");
+                            flags[0].setImageResource(R.drawable.flag_of_montenegro);
+                            break;
+                    }
+                }
+            }
+
+            public void onNothingSelected(AdapterView<?> arg0) { }
+        });
+
+        playerNames[1].setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+
+                if (playerNames[0].getSelectedItem().toString().equals
+                        (playerNames[1].getSelectedItem().toString()) &&
+                        !playerNames[0].getSelectedItem().equals(adapter.getItem(0))) {
+
+                    playerNames[1].setSelection(0);
+                    playerImages[1].setImageResource(R.drawable.unknown_player);
+                    scorePlayerNames[1].setText("");
+                    flags[1].setImageResource(R.drawable.unknown_flag);
+
+                    Toast selectionError = Toast.makeText(MainActivity.super.getApplicationContext(),
+                            "Player already chosen", Toast.LENGTH_SHORT);
+                    selectionError.show();
+
+                } else {
+
+                    String selectedPlayer = playerNames[1].getSelectedItem().toString();
+
+                    switch (selectedPlayer) {
+                        case "Choose Player":
+                            playerImages[1].setImageResource(R.drawable.unknown_player);
+                            scorePlayerNames[1].setText("");
+                            flags[1].setImageResource(R.drawable.unknown_flag);
+                            break;
+
+                        case "Roger Federer":
+                            playerImages[1].setImageResource(R.drawable.federer_full_15);
+                            scorePlayerNames[1].setText("Federer");
+                            flags[1].setImageResource(R.drawable.swiss_flag);
+                            break;
+
+                        case "Rafael Nadal":
+                            playerImages[1].setImageResource(R.drawable.nadal_full_15);
+                            scorePlayerNames[1].setText("Nadal");
+                            flags[1].setImageResource(R.drawable.spain_flag);
+                            break;
+
+                        case "Novak Djokovic":
+                            playerImages[1].setImageResource(R.drawable.djokovic_full_16);
+                            scorePlayerNames[1].setText("Djokovic");
+                            flags[1].setImageResource(R.drawable.flag_of_serbia);
+                            break;
+
+                        case "Stanislas Wawrinka":
+                            playerImages[1].setImageResource(R.drawable.wawrinka_full_15);
+                            scorePlayerNames[1].setText("Wawrinka");
+                            flags[1].setImageResource(R.drawable.swiss_flag);
+                            break;
+
+                        case "Miloš Raonić":
+                            playerImages[1].setImageResource(R.drawable.raonic_full_16);
+                            scorePlayerNames[1].setText("Raonić");
+                            flags[1].setImageResource(R.drawable.flag_of_montenegro);
+                            break;
+                    }
+                }
+            }
+
+            public void onNothingSelected(AdapterView<?> arg0) { }
+        });
     }
 
     public void increaseScore(View view) {
 
-        if (!finished) {
+        if (!playerNames[0].getSelectedItem().equals("Choose Player") &&
+                !playerNames[1].getSelectedItem().equals("Choose Player")) {
 
-            correctionDone = false;
-            challenged = false;
+            playerNames[0].setEnabled(false);
+            playerNames[1].setEnabled(false);
 
-            int parentId = ((View) view.getParent()).getId();
+            if (!finished) {
 
-            if (parentId == R.id.playerOneButtons) {
-                computeScore(0);
-            } else if (parentId == R.id.playerTwoButtons) {
-                computeScore(1);
+                correctionDone = false;
+                challenged = false;
+
+                int parentId = ((View) view.getParent()).getId();
+
+                if (parentId == R.id.playerOneButtons) {
+                    computeScore(0);
+                } else if (parentId == R.id.playerTwoButtons) {
+                    computeScore(1);
+                }
             }
+        } else {
+
+            Toast selectionError = Toast.makeText(MainActivity.super.getApplicationContext(),
+                    "You need to choose 2 players", Toast.LENGTH_SHORT);
+            selectionError.show();
         }
     }
 
@@ -289,18 +448,30 @@ public class MainActivity extends AppCompatActivity {
 
     public void challenge(View view) {
 
-        if (!finished) {
+        if (!playerNames[0].getSelectedItem().equals("Choose Player") &&
+                !playerNames[1].getSelectedItem().equals("Choose Player")) {
 
-            correctionDone = false;
-            challenged = true;
+            playerNames[0].setEnabled(false);
+            playerNames[1].setEnabled(false);
 
-            int parentId = ((View) view.getParent()).getId();
+            if (!finished) {
 
-            if (parentId == R.id.playerOneButtons && challengesLeft[0] > 0) {
-                makeChallenge(0);
-            } else if (parentId == R.id.playerTwoButtons && challengesLeft[1] > 0) {
-                makeChallenge(1);
+                correctionDone = false;
+                challenged = true;
+
+                int parentId = ((View) view.getParent()).getId();
+
+                if (parentId == R.id.playerOneButtons && challengesLeft[0] > 0) {
+                    makeChallenge(0);
+                } else if (parentId == R.id.playerTwoButtons && challengesLeft[1] > 0) {
+                    makeChallenge(1);
+                }
             }
+        } else {
+
+            Toast selectionError = Toast.makeText(MainActivity.super.getApplicationContext(),
+                    "You need to choose 2 players", Toast.LENGTH_SHORT);
+            selectionError.show();
         }
     }
 
@@ -457,4 +628,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
 }
